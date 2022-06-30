@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600&display=swap');
 
 
 *{
@@ -11,8 +12,8 @@
 
 html{
     font-size: 63.5%;
-    color: #fff;
-    overflow-x: hidden; 
+    color: #2F2E62;
+
     scroll-behavior: smooth;
 }
 
@@ -27,7 +28,7 @@ a{
 body{
     font-family: 'Ubuntu', sans-serif;
     font-weight: 400;
-    background: #5f8bad;
+    background: #5CDBF9;
 
     
 }
@@ -37,11 +38,12 @@ body{
     justify-content: space-between;
     align-items: center;
     padding: 0rem 19rem;
-    height: 9.2rem;
+    height: 8rem;
 }
 
+
+
 .nav-location{
-    
     display: flex;
     gap: 1rem;
     align-items: center;
@@ -50,12 +52,12 @@ body{
 
 .nav-icons{
     font-size: 3rem;
-    color: #fff;
+    color: #2F2E62;
 }
 
 .nav-location-text{
     font-size: 2rem;
-    color: #fff;
+    color: #2F2E62;
 }
 
 .section-weather-report{
@@ -64,7 +66,7 @@ body{
 
 .report-container{
     max-width: 100rem;
-    margin:  -2rem  auto;
+    margin:  -4rem  auto;
     padding: 1rem;
     display: flex;
     justify-content: center;
@@ -75,7 +77,6 @@ body{
 
 .weather-img{
     width: 35%;
-    
 }
 
 .weather-degree-container{
@@ -88,14 +89,11 @@ body{
 }
 
 .weather-degree{
-    font-size: 3.4rem;
-    text-shadow: #2F2E62 0 0 1px, 
-               #2F2E62 0 1px 3px, 
-               #2F2E62 0 3px 3px,  
-               #2F2E62 0 1px 1px, 
-               #2F2E62 0 1px 1px, 
-               rgba(243, 240, 240, 0.1) 0 2px 1px,
-               rgba(248, 244, 244, 0.2) 0 1px 1px;
+    font-size: 5rem;
+    font-family: 'Nunito', sans-serif;
+    color: #2F2E62;
+    font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 .weather-report-text{
@@ -103,6 +101,18 @@ body{
     justify-content: space-between;
     align-items: center;
     gap: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.errorMsg{
+    display: none;
+}
+
+.errorMsg.active{
+    display: block;
+    font-weight: 500;
+    text-align: center;
+    font-size: 1.3rem;
 }
 
 .wind{
@@ -120,7 +130,8 @@ body{
 }
 
 .weather-report-icons{
-    font-size: 1rem;
+    width: 2.1rem;
+    height: 2.2rem;
 }
 
 .wind-text, .rain-text{
@@ -128,7 +139,7 @@ body{
 }
 
 .section-weather-days{
-    padding: .2rem 0;
+    padding: 2rem 0;
 }
 
 .days-container{
@@ -138,7 +149,7 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 3rem;
 }
 
 .days-text-box{
@@ -147,9 +158,14 @@ body{
     gap: 10rem;
 }
 
-.days-text-box, p{
+.day{
     font-size: 1.6rem;
     cursor: pointer;
+    color: #2f2e6262;
+}
+
+.activeDay{
+    color: #2F2E62;
 }
 
 .hourly-card{
@@ -172,11 +188,11 @@ body{
     justify-content: center;
     align-items: center;
     border-radius: 13px;
-    background: rgba( 253, 249, 249, 0.25 );
-    /* box-shadow: 0 8px 10px 0 rgba( 31, 38, 135, 0.37 ); */
-    /* backdrop-filter: blur( 2.5px ); */
+    background: rgba(246, 242, 242, 0.6);
+    box-shadow: 2px 2px 8px 1px rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 2.5px );
     -webkit-backdrop-filter: blur( 2.5px );
-
+    margin-bottom: 1rem;
 }
 
 .hourly-time{
@@ -189,6 +205,7 @@ body{
 }
 
 .hourly-degree{
+
     margin-left: 1.8rem;
     font-size: 2.4rem;
 }
@@ -202,16 +219,11 @@ main{
 
 .main-container{
     width: 80%;
-    height: 95vh;
+    height: 97vh;
+    /* background-color: #2F2E62; */
 }
 
 
-@media (max-width: 1100px) {
-    .main-container{
-        width: 80%;
-        height: 95vh;
-    }
-}
 
 
 /* Search Bar*/
@@ -230,7 +242,15 @@ main{
     width: 280px;
 }
 
-.search .icon{
+.icon1.active{
+    display: none;
+}
+
+.icon2{
+    display: none;
+}
+
+.search .icon1{
     position: absolute;
     top: 0;
     left: 0;
@@ -241,11 +261,11 @@ main{
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+
     cursor: pointer;
 }
 
-.search .icon::before{
+.search .icon1::before{
     content: "";
     position: absolute;
     width: 10px;
@@ -256,7 +276,43 @@ main{
 
 }
 
-.search .icon::after{
+.search .icon1::after{
+    content: "";
+    position: absolute;
+    width: 3px;
+    height: 8px;
+    background: #2F2E62;
+    transform: translate(13px,13px) rotate(315deg);
+}
+
+
+.search .icon2.active{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+}
+
+.search .icon2::before{
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 3px solid #2F2E62;
+    border-radius: 50%;
+    transform: translate(6px,6px);
+
+}
+
+.search .icon2::after{
     content: "";
     position: absolute;
     width: 3px;
@@ -267,7 +323,7 @@ main{
 
 .search .input{
     position: relative;
-    width: 300px;
+    width: 150px;
     height: 60px;
     left: 35px;
     bottom: 12px;
@@ -319,11 +375,6 @@ main{
     transform: rotate(315deg);
 }
     
-
-.submit-btn{
-    width: 50px;
-    height: 20px;
-}
 
 
 

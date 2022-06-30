@@ -10,10 +10,12 @@ const hourlyTime = document.querySelectorAll(".hourly-time");
 const hourlyDegree = document.querySelectorAll(".hourly-degree");
 const weatherImg = document.querySelector(".weather-img");
 const cloudImgs = document.querySelectorAll(".cloud-img");
-const icon = document.querySelector(".icon");
+const icon1 = document.querySelector(".icon1");
+const icon2 = document.querySelector(".icon2");
 const search = document.querySelector(".search");
 const clear = document.querySelector(".clear");
-
+const navLocation = document.querySelector(".nav-location");
+const errorMsg = document.querySelector(".errorMsg");
 const searchInput = document.querySelector(".search-input");
 const btn = document.querySelector(".submit-btn");
 
@@ -26,13 +28,12 @@ const btn = document.querySelector(".submit-btn");
 
 clear.addEventListener("click",function(){
     document.querySelector(".search-input").value = "";
+    navLocation.classList.toggle("active");
     search.classList.toggle("active");
     clear.classList.toggle("active");
 })
 
-const day1 = document.querySelector(".day-1");
-const day2 = document.querySelector(".day-2");
-const day3 = document.querySelector(".day-3");
+
 
 const apiKey = "c7df52cb38394593a2c91554222406";
 let apiLink = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=london&days=3&aqi=no&alerts=no`;        
@@ -56,12 +57,7 @@ const emptyArrays = function(){
         sortedImgArr = [];
 }
 
-const generateDay = function(date){
-    const d = new Date(`${date}`);
-    // console.log(d);
-    const comingDays = `${d.toString().split(' ')[0]}, ${d.toString().split(' ')[2]} ${d.toString().split(' ')[1]}`
-    dateArr.push(comingDays);
-}
+
 
 // const now = new Date();
 // const currentTime = now.toString().split(' ')[4].slice(0,2);
@@ -69,6 +65,7 @@ const generateDay = function(date){
 
 
 const renderHtml = function(data){
+    
         locationText.textContent = data.location.name;
         weatherDegree.innerHTML = `${data.current.temp_c} &deg`;
         weatherDescription.textContent = data.current.condition.text;
@@ -102,31 +99,7 @@ const displayHours = function(currentHourPos){
 
 }
 
-const displayImg = function(day,currentHourPos,data){
 
-    day.forEach(hour => {
-        let currentImg = hour.condition.text;
-        currentImgArr.push(currentImg);
-    });
-
-    sortedImgArr = [...currentImgArr.slice(currentHourPos, currentImgArr.length), ...currentImgArr.slice(0,currentHourPos)];
-
-    for(let i=0; i<4;i++){
-        fiveImgArr.push(sortedImgArr[i])
-    }
-
-    // console.log(fiveImgArr);
-
-    cloudImgs.forEach((img,index) => {
-        if(data.current.is_day === 0){
-            img.src =  `./assets/images/Weather_Icons/moon/${fiveImgArr[index]}.png`;
-        }
-        else{
-            img.src = `./assets/images/Weather_Icons/sun/${fiveImgArr[index]}.png`;
-        }
-        
-    });
-}
 
 
 
@@ -152,8 +125,6 @@ hourlyDegree.forEach((degree,index) => {
 
 
 // let countrys = searchField.value;
-
-
 
 
 
@@ -217,6 +188,33 @@ const fetchApi = function(api){
             hourArr[j] = hourArr[j].slice(0,2) + ":00 PM" + hourArr[j].slice(2);
         }
 
+
+        const displayImg = function(day,currentHourPos){
+
+            day.forEach(hour => {
+                let currentImg = hour.condition.text;
+                currentImgArr.push(currentImg);
+            });
+        
+            sortedImgArr = [...currentImgArr.slice(currentHourPos, currentImgArr.length), ...currentImgArr.slice(0,currentHourPos)];
+        
+            for(let i=0; i<4;i++){
+                fiveImgArr.push(sortedImgArr[i])
+            }
+        
+            // console.log(fiveImgArr);
+        
+            cloudImgs.forEach((img,index) => {
+                if(data.current.is_day === 0){
+                    img.src =  `./assets/images/Weather_Icons/moon/${fiveImgArr[index]}.png`;
+                }
+                else{
+                    img.src = `./assets/images/Weather_Icons/sun/${fiveImgArr[index]}.png`;
+                }
+                
+            });
+        }
+
         // console.log(hourArr);
 
         const currentIndex = hourArr.indexOf(convertedTime);
@@ -229,20 +227,43 @@ const fetchApi = function(api){
         displayImg(currentDayHour,nextIndex,data);
 
 
+        const generateDay = function(date){
+            const d = new Date(`${date}`);
+            // console.log(d);
+            const comingDays = `${d.toString().split(' ')[0]}, ${d.toString().split(' ')[2]} ${d.toString().split(' ')[1]}`;
+            console.log(comingDays);
+            dateArr.push(comingDays);
+        }
+
+        console.log(dateArr);
+
+        
+
+
         const daysWeather = data.forecast.forecastday;
         daysWeather.forEach(day =>{
             generatedDate = generateDay(day.date);
         });
 
-        
+
+        days.forEach((day,index) => {
+            day.textContent = `${dateArr[index]}`
+        })
+       
 
         days.forEach((day,index) => {
             day.addEventListener("click", function(){
-                // It should change randomly like this displayImg(secondDayHour), displayImg(thirdDayHour)
+
                 displayImg(daysArr[index]);
                 displayTemp(daysArr[index],nextIndex);
                 emptyArrays();
 
+            })
+        })
+    
+        days.forEach((day,_,buttons) => {
+            day.addEventListener("click", function(){
+                buttons.forEach(button => button.classList.toggle("activeDay",button === day))
             })
         })
         
@@ -256,39 +277,63 @@ const fetchApi = function(api){
 
 
 
-// navigator.geolocation.getCurrentPosition(function(position){
-//     const lat = position.coords.latitude;
-//     const long = position.coords.longitude;
-//     console.log(lat,long);
-//     apiLink = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${long}&days=3&aqi=no&alerts=no`
-//     fetchApi(apiLink);
-//     console.log(apiLink);
-// });
+navigator.geolocation.getCurrentPosition(function(position){
+    const lat = position.coords.latitude;
+    const long = position.coords.longitude;
+    console.log(lat,long);
+    apiLink = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${long}&days=3&aqi=no&alerts=no`
+    fetchApi(apiLink);
+    console.log(apiLink);
+});
 
 
 
 fetchApi(apiLink);
 
-
-icon.addEventListener("click",function(){
-    console.log(searchInput.value);
+const addClass = function(){
+    navLocation.classList.toggle("active");
     search.classList.toggle("active");
     clear.classList.toggle("active");
-    let searchValue = searchInput.value
-    let searchApi = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${searchValue}&days=3&aqi=no&alerts=no`
-    fetchApi(searchApi);
-    searchInput.value= "";
+    icon1.classList.toggle("active");
+    icon2.classList.toggle("active");
+};
+
+
+icon1.addEventListener("click",function(){
+    addClass();
+
+    
+})
+
+icon2.addEventListener("click",function(){
+    if(!searchInput.value){
+        addClass();
+        errorMsg.classList.toggle("active");
+    }
+    else{
+        addClass();
+        errorMsg.classList.toggle("active");
+        let searchValue = searchInput.value
+        let searchApi = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${searchValue}&days=3&aqi=no&alerts=no`
+        fetchApi(searchApi);
+        searchInput.value= "";
+    }
+    
 })
 
 searchInput.addEventListener("keydown",function(e){
-    console.log(e);
-    if(e.code === "Enter"){``
-    search.classList.toggle("active");
-    clear.classList.toggle("active");
-    let searchValue = searchInput.value
-    let searchApi = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${searchValue}&days=3&aqi=no&alerts=no`
-    fetchApi(searchApi);
-    searchInput.value= "";
+    console.log(typeof(searchInput.value));
+    if(e.keyCode == 13){
+        e.preventDefault()
+        addClass();
+        errorMsg.classList.toggle("active");
+        const searchValue = searchInput.value
+        const searchApi = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${searchValue}&days=3&aqi=no&alerts=no`;
+        fetchApi(searchApi);
+        searchInput.value= "";
+    }
+    else{
+        return
     }
 })
 
