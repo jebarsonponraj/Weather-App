@@ -60,6 +60,7 @@ body{
 
 .nav-location-text{
     font-size: 2rem;
+    font-weight: 500;
     color: #2F2E62;
 }
 
@@ -113,12 +114,6 @@ body{
     display: none;
 }
 
-.errorMsg.active{
-    display: block;
-    font-weight: 500;
-    text-align: center;
-    font-size: 1.3rem;
-}
 
 .wind{
     display: flex;
@@ -249,15 +244,8 @@ main{
     width: 280px;
 }
 
-.icon1.active{
-    display: none;
-}
 
-.icon2{
-    display: none;
-}
-
-.search .icon1{
+.search .icon{
     position: absolute;
     top: 0;
     left: 0;
@@ -272,7 +260,7 @@ main{
     cursor: pointer;
 }
 
-.search .icon1::before{
+.search .icon::before{
     content: "";
     position: absolute;
     width: 10px;
@@ -283,7 +271,7 @@ main{
 
 }
 
-.search .icon1::after{
+.search .icon::after{
     content: "";
     position: absolute;
     width: 3px;
@@ -293,40 +281,6 @@ main{
 }
 
 
-.search .icon2.active{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 20px;
-    height: 20px;
-    background: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    cursor: pointer;
-}
-
-.search .icon2::before{
-    content: "";
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border: 3px solid #2F2E62;
-    border-radius: 50%;
-    transform: translate(6px,6px);
-
-}
-
-.search .icon2::after{
-    content: "";
-    position: absolute;
-    width: 3px;
-    height: 8px;
-    background: #2F2E62;
-    transform: translate(13px,13px) rotate(315deg);
-}
 
 .search .input{
     position: relative;

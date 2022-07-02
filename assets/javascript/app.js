@@ -10,8 +10,7 @@ const hourlyTime = document.querySelectorAll(".hourly-time");
 const hourlyDegree = document.querySelectorAll(".hourly-degree");
 const weatherImg = document.querySelector(".weather-img");
 const cloudImgs = document.querySelectorAll(".cloud-img");
-const icon1 = document.querySelector(".icon1");
-const icon2 = document.querySelector(".icon2");
+const icon = document.querySelector(".icon");
 const search = document.querySelector(".search");
 const clear = document.querySelector(".clear");
 const navLocation = document.querySelector(".nav-location");
@@ -115,8 +114,9 @@ const displayTemp = function(day,currentHourPos){
 
 
 // Function to fetch data from api
-const fetchApi = function(api){
-    fetch(api).then(response => response.json(),err => console.log(err)).then(data => {
+const fetchApi = async function(api){
+   try{ const res = await fetch(api);
+    const data = await res.json();
         console.log(data);
         renderHtml(data);
         
@@ -180,6 +180,7 @@ const fetchApi = function(api){
             });
         
             sortedImgArr = [...currentImgArr.slice(currentHourPos, currentImgArr.length), ...currentImgArr.slice(0,currentHourPos)];
+            console.log(sortedImgArr);
         
             for(let i=0; i<4;i++){
                 fiveImgArr.push(sortedImgArr[i])
@@ -206,7 +207,7 @@ const fetchApi = function(api){
         // Calling functions
         displayHours(nextIndex);
         displayTemp(currentDayHour ,nextIndex);
-        displayImg(currentDayHour,nextIndex,data);
+        displayImg(currentDayHour,nextIndex);
 
 
         const generateDay = function(date){
@@ -228,7 +229,7 @@ const fetchApi = function(api){
             day.textContent = `${dateArr[index]}`
             day.addEventListener("click", function(){
 
-                displayImg(daysArr[index]);
+                displayImg(daysArr[index],nextIndex);
                 displayTemp(daysArr[index],nextIndex);
                 emptyArrays();
 
@@ -245,8 +246,10 @@ const fetchApi = function(api){
         // After fetching and displaying all the data in the web page emptying all the arrays
         hourArr = [ ];
         emptyArrays();
-
-    }).catch(err => console.log(err));   
+    } catch(err){
+        console.error(err.message)
+    }
+    // .catch(err => console.log(err));   
 }
 
 
@@ -269,8 +272,6 @@ const addClass = function(){
     navLocation.classList.toggle("active");
     search.classList.toggle("active");
     clear.classList.toggle("active");
-    icon1.classList.toggle("active");
-    icon2.classList.toggle("active");
 };
 
 
@@ -282,20 +283,15 @@ clear.addEventListener("click",function(){
 })
 
 
-icon1.addEventListener("click",function(){
-    addClass();
-})
 
 
 // Searching and displaying whether report of user input location
-icon2.addEventListener("click",function(){
+icon.addEventListener("click",function(){
     if(!searchInput.value){
         addClass();
-        errorMsg.classList.toggle("active");
     }
     else{
         addClass();
-        errorMsg.classList.toggle("active");
         let searchValue = searchInput.value
         let searchApi = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${searchValue}&days=3&aqi=no&alerts=no`
         fetchApi(searchApi);
@@ -311,7 +307,6 @@ searchInput.addEventListener("keydown",function(e){
     if(e.keyCode == 13){
         e.preventDefault()
         addClass();
-        errorMsg.classList.remove("active");
         const searchValue = searchInput.value
         const searchApi = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${searchValue}&days=3&aqi=no&alerts=no`;
         fetchApi(searchApi);

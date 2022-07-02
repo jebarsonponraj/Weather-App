@@ -1,5 +1,9 @@
 @media (max-width: 1300px) {
 
+    html{
+        overflow: auto;
+    }
+
     .main-container{
         width: 85%;
         height: 98vh;
@@ -306,6 +310,10 @@
     .nav-location{
         gap: .1rem;
     }
+
+    .nav-location-text{
+        font-size: 1.7rem;
+    }
     
     .search.active{
         width: 280px;
@@ -313,8 +321,7 @@
 
     input[type=text]:focus {
         width: 220px;
-      }
-
+    }
 
 
 }
