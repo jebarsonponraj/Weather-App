@@ -321,7 +321,12 @@
 
     input[type=text]:focus {
         width: 220px;
+
     }
 
+    .main-container{
+        height: 93vh;
+        /* background-color: #2F2E62; */
+    }
 
 }

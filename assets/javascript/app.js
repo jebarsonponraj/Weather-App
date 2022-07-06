@@ -254,13 +254,18 @@ const fetchApi = async function(api){
 
 
 // Getting User Location using Geolocation API and displaying user's current location weather 
+const options = {
+    enableHighAccuracy: true,
+}
 navigator.geolocation.getCurrentPosition(function(position){
     const lat = position.coords.latitude;
     const long = position.coords.longitude;
     console.log(lat,long);
     apiLink = `https://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${long}&days=3&aqi=no&alerts=no`
     fetchApi(apiLink);
-});
+},function(){
+    console.log("Failed to get location");
+},options);
 
 
 // By default this function will fetch London weather if the user denies the location access

@@ -14,6 +14,12 @@ html{
     font-size: 63.5%;
     color: #2F2E62;
     scroll-behavior: smooth;
+    background: -webkit-linear-gradient(to right, #93EDC7, #1CD8D2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #93EDC7, #1CD8D2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+
+
+
 }
 
 ul{
@@ -27,11 +33,12 @@ a{
 body{
     font-family: 'Ubuntu', sans-serif;
     font-weight: 400;
-    background: rgb(247,190,148);
-    background: -moz-linear-gradient(0deg, rgba(247,190,148,1) 0%, rgba(250,220,123,1) 51%, rgba(247,190,148,1) 84%);
-    background: -webkit-linear-gradient(0deg, rgba(247,190,148,1) 0%, rgba(250,220,123,1) 51%, rgba(247,190,148,1) 84%);
-    background: linear-gradient(0deg, rgba(247,190,148,1) 0%, rgba(250,220,123,1) 51%, rgba(247,190,148,1) 84%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#f7be94",endColorstr="#f7be94",GradientType=1);
+
+
+    background: #1CD8D2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #93EDC7, #1CD8D2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #93EDC7, #1CD8D2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 
     
 }
@@ -183,6 +190,7 @@ body{
 
 .hourly-cards{
     flex: 0 0 auto;
+    margin-top: .2rem;
     width: 10rem;
     height: 15rem;
     display: flex;
@@ -191,7 +199,7 @@ body{
     align-items: center;
     border-radius: 13px;
     background: rgba(246, 242, 242, 0.6);
-    box-shadow: 2px 2px 8px 1px rgba( 31, 38, 135, 0.37 );
+    box-shadow: 1px 1px 3px 1px rgba( 31, 38, 135, 0.37 );
     backdrop-filter: blur( 2.5px );
     -webkit-backdrop-filter: blur( 2.5px );
     margin-bottom: 1rem;
