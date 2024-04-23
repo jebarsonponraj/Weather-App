@@ -84,7 +84,7 @@ const displayHours = function(currentHourPos){
 
 
 
-
+// Function to display the temperature of next 4 hours dynamically
 const displayTemp = function(day,currentHourPos){
 
     // Looping an arraay named day and getting the temperature from the api which consists of 24 hour's temperature of a day
